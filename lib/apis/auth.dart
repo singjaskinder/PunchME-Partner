@@ -4,7 +4,7 @@ import 'package:punchmepartner/models/store_m.dart';
 
 abstract class AuthRepo {
   Future<UserCredential> login(String email, String password);
-  Future<StoreM> getStoreDetails();
+  Future<StoreM> getStoreDetails(); 
   Future<void> updateStoreDetails(Map<String, dynamic> data);
   Future<void> sendPasswordResetLink(String email);
 }

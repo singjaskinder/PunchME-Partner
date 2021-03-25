@@ -6,11 +6,14 @@ class StoreM {
   String timings;
   int totalOffers;
   List<String> images;
+  List<String> users;
   String mapLink;
   Object location;
+  String address;
+  String province;
   bool status;
+  bool isStore;
   String banFor;
-  String token;
   String email;
   String ownerName;
   String phone;
@@ -23,11 +26,14 @@ class StoreM {
       this.timings,
       this.totalOffers,
       this.images,
+      this.users,
       this.mapLink,
       this.location,
+      this.address,
+      this.province,
       this.status,
+      this.isStore,
       this.banFor,
-      this.token,
       this.email,
       this.ownerName,
       this.phone});
@@ -40,11 +46,14 @@ class StoreM {
     timings = json['timings'];
     totalOffers = json['total_offers'];
     images = json['images'].cast<String>();
+    users = json['users'].cast<String>();
     mapLink = json['mapLink'];
     location = json['location']['geopoint'];
+    address = json['address'];
+    province = json['province'];
+    isStore = json['is_store'];
     status = json['status'];
     banFor = json['ban_for'];
-    token = json['token'];
     email = json['email'];
     ownerName = json['owner_name'];
     phone = json['phone'];
@@ -59,11 +68,15 @@ class StoreM {
     data['timings'] = this.timings;
     data['total_offers'] = this.totalOffers;
     data['images'] = this.images;
+    data['users'] = this.users;
     data['mapLink'] = this.mapLink;
     data['location'] = this.location;
+    data['address'] = this.address;
+    data['province'] = this.province;
+    data['is_store'] = this.isStore;
     data['status'] = this.status;
     data['ban_for'] = this.banFor;
-    data['token'] = this.token;
+    data['email'] = this.email;
     data['owner_name'] = this.ownerName;
     data['phone'] = this.phone;
     return data;

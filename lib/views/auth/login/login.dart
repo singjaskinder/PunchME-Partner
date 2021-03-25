@@ -8,7 +8,7 @@ import 'package:punchmepartner/res/app_colors.dart';
 import 'package:punchmepartner/res/app_styles.dart';
 import 'package:punchmepartner/views/auth/login/login_ctrller.dart';
 
-import 'file:///C:/work/punchme/punchmepartner/lib/utils/size_config.dart';
+import 'package:punchmepartner/utils/size_config.dart';
 
 class Login extends StatelessWidget {
   @override
@@ -30,10 +30,10 @@ class Login extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: SizeConfig.height * 18,
+                    height: SizeConfig.height * 20,
                   ),
-                  JxText('LOGIN',
-                      size: 7, color: AppColors.yellow, isBold: true),
+                  JxText('login',
+                      size: 6, color: AppColors.yellow, isBold: true),
                   JxText('For Store Owners',
                       size: 4, color: AppColors.yellow, isBold: true),
                   JxSizedBox(

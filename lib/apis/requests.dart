@@ -19,6 +19,7 @@ class RequestsApis extends RequestsRepo {
   final uid = FirebaseAuth.instance.currentUser.uid;
   final requestsStore = FirebaseFirestore.instance.collection('requests');
   final serviceStore = FirebaseFirestore.instance.collection('stores');
+  final usersStore = FirebaseFirestore.instance.collection('users');
   final requestsHistoriesStore =
       FirebaseFirestore.instance.collection('requests_histories');
 
@@ -26,6 +27,17 @@ class RequestsApis extends RequestsRepo {
       Map<String, dynamic> serviceHistoryM) async {
     final batch = FirebaseFirestore.instance.batch();
     batch.update(requestsStore.doc(requestM.id), requestM.toJson());
+    if (requestM.punch) {
+      batch.set(
+          usersStore.doc(requestM.uid).collection('punches').doc(requestM.sid),
+          serviceHistoryM,
+          SetOptions(merge: true));
+    } else {
+      batch.set(
+          usersStore.doc(requestM.uid).collection('points').doc(requestM.oid),
+          serviceHistoryM,
+          SetOptions(merge: true));
+    }
     batch.set(
         requestsHistoriesStore.doc(requestM.id), requestHistoryM.toJson());
     if (requestM.status) {

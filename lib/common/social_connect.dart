@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'file:///C:/work/punchme/punchmepartner/lib/utils/size_config.dart';
 import 'package:punchmepartner/res/app_colors.dart';
+import 'package:punchmepartner/utils/size_config.dart';
 
 class SocialConnect extends StatelessWidget {
   const SocialConnect({

@@ -14,7 +14,7 @@ class LoginCtrller extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    emailCtrl.text = 'emai@da.com';
+    emailCtrl.text = 'delicacie@admin.com';
     passwordCtrl.text = '1234567890';
   }
 
@@ -24,7 +24,6 @@ class LoginCtrller extends GetxController {
         isLoading.value = true;
         JxSnackBarLoading(isLoading.value);
         await authRepo.login(emailCtrl.text, passwordCtrl.text);
-
         isLoading.value = false;
         JxSnackBarLoading(isLoading.value);
         Get.offAllNamed(Routes.pager);

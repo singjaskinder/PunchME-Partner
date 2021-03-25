@@ -7,10 +7,10 @@ import 'text.dart';
 class ContentDivider extends StatelessWidget {
   ContentDivider(
       {this.title,
-      this.fontSize = 0.8,
+      this.fontSize = 4,
       this.fontColor = AppColors.lightGrey,
       this.barColor = AppColors.lightGrey,
-      this.barSize = 2});
+      this.barSize = 1.5});
   final String title;
   final double fontSize;
   final Color fontColor;

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,6 +11,8 @@ import 'package:punchmepartner/models/service_m.dart';
 import 'package:punchmepartner/overlays/dialog.dart';
 import 'package:punchmepartner/overlays/progress_dialog.dart';
 import 'package:punchmepartner/overlays/snackbar.dart';
+import 'package:punchmepartner/res/app_colors.dart';
+import 'package:punchmepartner/res/app_styles.dart';
 import 'package:punchmepartner/utils/converts.dart';
 import 'package:punchmepartner/utils/date_time.dart';
 import 'package:punchmepartner/utils/location.dart';
@@ -24,15 +27,15 @@ class ServicesController extends GetxController {
   final descriptionCtrl = TextEditingController();
   final doItCtrl = TextEditingController();
   final getItCtrl = TextEditingController();
-  final scanLimitCtrl = TextEditingController();
   bool isUpdate = false;
   ServiceM storeM;
 
   final imageBase = ''.obs;
   final imageFile = <dynamic>[].obs;
   final imageEmpty = false.obs;
-  final errText = ''.obs;
   final isPunch = true.obs;
+  final endTime = 'Select'.obs;
+  final errText = ''.obs;
 
   @override
   void onInit() {
@@ -94,13 +97,49 @@ class ServicesController extends GetxController {
     }
   }
 
-  void setServiceType(bool value) => isPunch.value = value;
+  void setServiceType(bool value) {
+    isPunch.value = value;
+    doItCtrl.text = '';
+    getItCtrl.text = '';
+  }
 
   String getInfo() {
     if (isPunch.value) {
       return 'Customers will scan ${doItCtrl.text} times & will receive ${getItCtrl.text} ${nameCtrl.text} / s for free';
     } else {
-      return 'For ${nameCtrl.text}, Customers will scan ${doItCtrl.text} times & will receive ${scanLimitCtrl.text} points per every scan, once they collected total point they\'ll receive ${getItCtrl.text} ${nameCtrl.text} / s for free';
+      return 'For ${nameCtrl.text}, Customers will scan ${doItCtrl.text} times & will receive 1 point per every scan, once they collected total point they\'ll receive ${getItCtrl.text} ${nameCtrl.text} / s for free';
+    }
+  }
+
+  void pickDate(context, int i) async {
+    DateTime selectedDate;
+    final DateTime picked = await showDatePicker(
+      context: context,
+      firstDate: DateTime.now(),
+      initialDate: DateTime.now(),
+      lastDate: DateTime(2023, 1, 1),
+      builder: (_, child) {
+        return Theme(
+          data: ThemeData.dark().copyWith(
+            colorScheme: ColorScheme.fromSwatch(
+              primarySwatch: Colors.yellow,
+              primaryColorDark: AppColors.yellow,
+            ),
+            timePickerTheme: TimePickerTheme.of(context).copyWith(),
+          ),
+          child: child,
+        );
+      },
+    );
+    if (picked != null) {
+      selectedDate = picked;
+      String time =
+          formatDate(selectedDate, [dd, '-', mm, '-', yyyy]).toString();
+      if (i == 1) {
+        endTime.value = time;
+      } else if (i == 2) {
+        endTime.value = time;
+      }
     }
   }
 
@@ -110,20 +149,23 @@ class ServicesController extends GetxController {
     doItCtrl.text = '';
     getItCtrl.text = '';
     priceCtrl.text = '';
+    endTime.value = 'Select';
     removeImage();
   }
 
   Future<void> create() async {
-    // nameCtrl.text = 'coffww';
-    // descriptionCtrl.text = 'de coffww';
-    // doItCtrl.text = '5';
-    // getItCtrl.text = '1';
-    // priceCtrl.text = '20';
     if (formKey.currentState.validate()) {
       if (imageBase.value == '') {
         imageEmpty.value = true;
         return;
       }
+      if (isPunch.value) {
+        if (endTime.value.contains('Select')) {
+          errText.value = 'Select expiry Date';
+          return;
+        }
+      }
+      errText.value = '';
       final onPos = () async {
         imageEmpty.value = false;
         try {
@@ -135,7 +177,6 @@ class ServicesController extends GetxController {
               timings: storeM.timings,
               doIt: toInt(doItCtrl.text),
               getIt: toInt(getItCtrl.text),
-              limit: isPunch.value ? 0 : toInt(scanLimitCtrl.text),
               price: toDouble(priceCtrl.text),
               punch: isPunch.value,
               location: setGeoPoint(storeM.location),

@@ -6,7 +6,8 @@ import 'package:punchmepartner/res/app_colors.dart';
 import 'package:punchmepartner/res/app_styles.dart';
 import 'package:punchmepartner/routes/routes.dart';
 
-import 'file:///C:/work/punchme/punchmepartner/lib/utils/size_config.dart';
+import 'package:punchmepartner/utils/size_config.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Landing extends StatefulWidget {
   static const id = 'landing';
@@ -25,12 +26,12 @@ class _LandingState extends State<Landing> {
 
   void checkUser() async {
     User user = FirebaseAuth.instance.currentUser;
-    // final saved = await SharedPreferences.getInstance();
-    // saved.clear();
-    // user = null;
-    Future.delayed(Duration(seconds: 1), () async {
+    final saved = await SharedPreferences.getInstance();
+    Future.delayed(Duration(seconds: 0), () async {
       if (user == null) {
-        Get.offAndToNamed(Routes.login);
+        saved.clear();
+        user = null;
+        Get.offAndToNamed(Routes.decider);
       } else {
         Get.offAndToNamed(Routes.pager);
       }

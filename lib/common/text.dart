@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:punchmepartner/res/app_colors.dart';
 import 'package:punchmepartner/res/app_styles.dart';
-
-import 'file:///C:/work/punchme/punchmepartner/lib/utils/size_config.dart';
+import 'package:punchmepartner/utils/size_config.dart';
 
 class JxText extends StatelessWidget {
   JxText(this.text,

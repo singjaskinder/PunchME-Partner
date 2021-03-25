@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:punchmepartner/common/text.dart';
 import 'package:punchmepartner/res/app_colors.dart';
 import 'package:punchmepartner/res/app_styles.dart';
+import 'package:punchmepartner/utils/size_config.dart';
 
 class TextIconBTN extends StatelessWidget {
   const TextIconBTN({
@@ -36,17 +37,22 @@ class TextIconBTN extends StatelessWidget {
               : AppColors.yellow.withOpacity(0.4),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          JxText(
-            label + ' ',
-            size: 5,
-            color: outlined ? AppColors.yellow : AppColors.darkerGrey,
-          ),
-          Icon(
-            icondata,
-            color: outlined ? AppColors.yellow : AppColors.darkerGrey,
-          )
-        ]),
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              JxText(
+                label + ' ',
+                size: 5,
+                isBold: true,
+                color: outlined ? AppColors.yellow : AppColors.darkerGrey,
+              ),
+              Icon(
+                icondata,
+                color: outlined ? AppColors.yellow : AppColors.black,
+                size: SizeConfig.width * 6,
+              )
+            ]),
       ),
     );
   }

@@ -18,7 +18,7 @@ class CreateService extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: AppColors.yellow,
           title: JxText(
-            'Add Service',
+            'Add Offer',
             color: AppColors.black,
           ),
           iconTheme: IconThemeData(color: AppColors.black),
@@ -39,16 +39,15 @@ class CreateService extends StatelessWidget {
                     ),
                   ),
                   JxSizedBox(
-                    height: 2,
+                    height: 3,
                   ),
-                  JxSizedBox(),
                   Row(
                     children: [
                       Expanded(
                           child: TextFormField(
                               controller: controller.nameCtrl,
                               decoration: AppStyles.generalTxtField
-                                  .copyWith(labelText: 'Service name'),
+                                  .copyWith(labelText: 'Offer name'),
                               validator: (val) => val.isNotEmpty ? null : '')),
                       JxSizedBox(
                         width: 3,
@@ -80,7 +79,7 @@ class CreateService extends StatelessWidget {
                     children: [
                       Expanded(
                         child: JxText(
-                          'Service type:',
+                          'Offer type:',
                           size: 5,
                           color: AppColors.yellow,
                         ),
@@ -114,16 +113,34 @@ class CreateService extends StatelessWidget {
                   JxSizedBox(
                     height: 2,
                   ),
+                  Obx(
+                    () => Visibility(
+                      visible: !controller.isPunch.value,
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: JxText(
+                          '1 dollar = 1 point',
+                          size: 3,
+                          color: AppColors.yellow,
+                        ),
+                      ),
+                    ),
+                  ),
+                  JxSizedBox(),
                   Row(
                     children: [
                       Expanded(
-                          child: TextFormField(
-                              keyboardType: TextInputType.number,
-                              controller: controller.doItCtrl,
-                              decoration: AppStyles.generalTxtField.copyWith(
-                                  labelText: 'Scan For',
-                                  contentPadding: EdgeInsets.all(15)),
-                              validator: (val) => val.isNum ? null : '')),
+                          child: Obx(
+                        () => TextFormField(
+                            keyboardType: TextInputType.number,
+                            controller: controller.doItCtrl,
+                            decoration: AppStyles.generalTxtField.copyWith(
+                                labelText: controller.isPunch.value
+                                    ? 'Scan For'
+                                    : 'Collect points',
+                                contentPadding: EdgeInsets.all(15)),
+                            validator: (val) => val.isNum ? null : ''),
+                      )),
                       JxSizedBox(
                         width: 3,
                       ),
@@ -135,50 +152,63 @@ class CreateService extends StatelessWidget {
                                   labelText: 'And get',
                                   contentPadding: EdgeInsets.all(15)),
                               validator: (val) => val.isNum ? null : '')),
-                      JxSizedBox(
-                        width: 3,
-                      ),
-                      Obx(
-                        () => Visibility(
-                          visible: !controller.isPunch.value,
-                          child: Expanded(
-                              child: TextFormField(
-                                  keyboardType: TextInputType.number,
-                                  controller: controller.scanLimitCtrl,
-                                  decoration: AppStyles.generalTxtField
-                                      .copyWith(
-                                          labelText: 'Scan point limit',
-                                          contentPadding: EdgeInsets.all(15)),
-                                  validator: (val) => !controller.isPunch.value
-                                      ? val.isNum
-                                          ? null
-                                          : ''
-                                      : null)),
-                        ),
-                      )
                     ],
                   ),
-                  JxSizedBox(),
+                  JxSizedBox(
+                    height: 1.5,
+                  ),
                   Obx(
                     () => Visibility(
-                      visible: !controller.isPunch.value,
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: JxText(
-                          'Minimum 100 points, 1 dollar equals 1000 points ',
-                          size: 3,
-                          color: AppColors.yellow,
-                        ),
+                      visible: controller.isPunch.value,
+                      child: Row(
+                        children: [
+                          Expanded(
+                              child: JxText(
+                            'Select End date:',
+                            size: 5,
+                          )),
+                          JxSizedBox(
+                            width: 3,
+                          ),
+                          Expanded(
+                            child: Obx(
+                              () => MaterialButton(
+                                shape: AppStyles.minimalBorder.copyWith(
+                                    side: BorderSide(
+                                        width: 1,
+                                        color: controller.errText.value != ''
+                                            ? AppColors.red
+                                            : controller.endTime.value
+                                                    .contains('Select')
+                                                ? AppColors.white
+                                                : AppColors.yellow)),
+                                onPressed: () =>
+                                    controller.pickDate(context, 2),
+                                splashColor: AppStyles.splashYellow,
+                                child: Center(
+                                    child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: JxText(controller.endTime.value,
+                                      size: 4,
+                                      color: controller.endTime.value
+                                              .contains('Select')
+                                          ? AppColors.white
+                                          : AppColors.yellow),
+                                )),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
                   JxSizedBox(
-                    height: 3,
+                    height: 2,
                   ),
                   TextIconBTN(
                     onPressed: () => controller.create(),
                     enabled: true,
-                    label: 'Add Service',
+                    label: 'Add Offer',
                     icondata: Icons.add,
                   ),
                   JxSizedBox(

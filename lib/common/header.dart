@@ -2,9 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:punchmepartner/clippers/trapezium_clipper.dart';
 import 'package:punchmepartner/res/app_colors.dart';
 import 'package:punchmepartner/res/app_styles.dart';
-
-import 'file:///C:/work/punchme/punchmepartner/lib/utils/size_config.dart';
-
+import 'package:punchmepartner/utils/size_config.dart';
 class HeaderClipped extends StatelessWidget {
   const HeaderClipped({
     Key key,

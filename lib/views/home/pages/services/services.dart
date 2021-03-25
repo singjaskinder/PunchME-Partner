@@ -23,7 +23,7 @@ class Services extends StatelessWidget {
           builder: (_, snap) {
             if (snap.hasData) {
               if (snap.data.docs.isEmpty) {
-                return SnapshotEmpty('No services found');
+                return SnapshotEmpty('No offers added');
               }
               return ListView.separated(
                   itemCount: snap.data.docs.length,

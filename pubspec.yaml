@@ -46,6 +46,9 @@ dependencies:
   get: ^3.24.0
   dio:
   shared_preferences:
+  intl:
+  date_format:
+  syncfusion_flutter_charts:
 
 dev_dependencies:
   flutter_test:

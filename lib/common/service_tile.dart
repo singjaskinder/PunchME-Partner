@@ -4,7 +4,6 @@ import 'package:punchmepartner/res/app_colors.dart';
 import 'package:punchmepartner/res/app_styles.dart';
 import 'package:punchmepartner/utils/currency.dart';
 import 'package:punchmepartner/utils/size_config.dart';
-
 import 'sizedbox.dart';
 import 'text.dart';
 
@@ -39,6 +38,10 @@ class _ServiceState extends State<ServiceTile>
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  String offerInfo(ServiceM serviceM) {
+    return '${serviceM.punch ? 'Punch' : 'Collect'} ${serviceM.doIt} ${serviceM.punch ? 'and get' : 'points and get'},\n${serviceM.getIt} for free ';
   }
 
   @override
@@ -84,21 +87,10 @@ class _ServiceState extends State<ServiceTile>
                             isBold: true,
                           ),
                           SizedBox(height: 2),
-                          Row(
-                            children: [
-                              Text(serviceM.punch ? 'Punch ' : 'Collect ',
-                                  style: AppStyles.idleTxt),
-                              Text(serviceM.doIt.toString(),
-                                  style: AppStyles.idleTxt),
-                              Text(
-                                  serviceM.punch
-                                      ? ' and get '
-                                      : ' points and get ',
-                                  style: AppStyles.idleTxt),
-                              Text(serviceM.getIt.toString(),
-                                  style: AppStyles.idleTxt),
-                              Text(' for free ', style: AppStyles.idleTxt),
-                            ],
+                          JxText(
+                            offerInfo(serviceM),
+                            maxLines: 2,
+                            size: 3.8,
                           ),
                         ],
                       ),

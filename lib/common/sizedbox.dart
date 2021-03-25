@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'file:///C:/work/punchme/punchmepartner/lib/utils/size_config.dart';
+import 'package:punchmepartner/utils/size_config.dart';
 
 class JxSizedBox extends StatelessWidget {
   JxSizedBox({this.width = 1, this.height = 1});

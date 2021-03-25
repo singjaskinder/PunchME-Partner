@@ -5,8 +5,7 @@ import 'package:punchmepartner/common/header.dart';
 import 'package:punchmepartner/common/sizedbox.dart';
 import 'package:punchmepartner/common/text.dart';
 import 'package:punchmepartner/res/app_colors.dart';
-
-import 'file:///C:/work/punchme/punchmepartner/lib/utils/size_config.dart';
+import 'package:punchmepartner/utils/size_config.dart';
 
 import 'forgot_password_ctrller.dart';
 

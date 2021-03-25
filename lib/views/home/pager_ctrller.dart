@@ -5,12 +5,12 @@ import 'package:get/get.dart';
 import 'package:punchmepartner/apis/auth.dart';
 import 'package:punchmepartner/models/store_m.dart';
 import 'package:punchmepartner/routes/routes.dart';
+import 'package:punchmepartner/views/home/pages/insights/insights.dart';
 import 'package:punchmepartner/views/home/pages/requests/requests.dart';
 import 'package:punchmepartner/views/home/pages/services/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'pages/account/account.dart';
-import 'pages/sales/sales.dart';
 
 class PageCtrller extends GetxController {
   AuthRepo authRepo = AuthApis();
@@ -23,8 +23,8 @@ class PageCtrller extends GetxController {
         page: Requests(),
         icon: Icons.remove_from_queue_sharp,
         name: 'Requests'),
-    JxPageView(page: Services(), icon: Icons.room_service, name: 'Services'),
-    JxPageView(page: Sales(), icon: Icons.insights, name: 'Sales'),
+    JxPageView(page: Services(), icon: Icons.room_service, name: 'Offers'),
+    JxPageView(page: Insights(), icon: Icons.insights, name: 'Insights'),
     JxPageView(page: Account(), icon: Icons.person, name: 'Account'),
   ];
 
@@ -38,7 +38,7 @@ class PageCtrller extends GetxController {
     final storeM = await authRepo.getStoreDetails();
     this.storeM.value = storeM;
     final saver = await SharedPreferences.getInstance();
-    if (storeM.token == null) {
+    if (storeM == null) {
       final token = await updateStoreDetails(storeM);
       saver.setString('token', token);
     }
